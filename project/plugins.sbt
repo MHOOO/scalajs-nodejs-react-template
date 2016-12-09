@@ -8,6 +8,9 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.2.0")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.13")
 
+// bundle npm dependencies together for the browser
+addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.3.1")
+
 // Resolvers
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
