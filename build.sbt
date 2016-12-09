@@ -25,7 +25,6 @@ val jsCommonSettings = Seq(
   ),
   relativeSourceMaps := true,
   //persistLauncher := true,
-  mainClass in Compile := Some("app.TodoMvcMain"),
   persistLauncher in Test := false,
   homepage := Some(url("https://github.com/ldaniels528/transcendent-js-todomvc")),
   addCompilerPlugin("org.scalamacros" % "paradise" % paradisePluginVersion cross CrossVersion.full),
@@ -42,7 +41,7 @@ lazy val shared = (project in file("app-shared"))
   .enablePlugins(ScalaJSPlugin)
   .settings(jsCommonSettings: _*)
   .settings(
-    name := "todomvc-shared",
+    name := "shared",
     organization := "com.github.ldaniels528",
     version := appVersion,
     libraryDependencies ++= Seq(
@@ -50,15 +49,18 @@ lazy val shared = (project in file("app-shared"))
     )
   )
 
-lazy val angularjs = (project in file("app-angularjs"))
+// The frontend runs in the browser
+lazy val frontend = (project in file("app-frontend"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .aggregate(shared)
   .dependsOn(shared)
   .settings(jsCommonSettings: _*)
   .settings(
-    name := "todo-mvc-angularjs",
+    name := "frontend",
     organization := "com.github.ldaniels528",
     version := appVersion,
+    //mainClass in Compile := Some("app.TodoMvcMain"),
+    // dependencies necessary for compilation: these include facades for e.g. react
     libraryDependencies ++= Seq(
       "com.github.ldaniels528" %%% "scalajs-common" % transcendentVersion,
       // contains the scalajs-react library, which includes facades for react
@@ -67,27 +69,48 @@ lazy val angularjs = (project in file("app-angularjs"))
     npmDependencies in Compile ++= Seq("rc-tabs" -> "0.7.1",
                                        "react" -> "15.3.2",
                                        "react-dom" -> "15.3.2")
+
+    // the following are javascript dependencies, available as webjars
+    // npm deps go into app-angularjs/package.json
+    // jsDependencies ++= Seq(
+    //   "org.webjars.bower" % "react" % "15.3.2"
+    //     /        "react-with-addons.js"
+    //     minified "react-with-addons.min.js"
+    //     commonJSName "React",
+    //   "org.webjars.bower" % "react" % "15.3.2"
+    //     /         "react-dom.js"
+    //     minified  "react-dom.min.js"
+    //     dependsOn "react-with-addons.js"
+    //     commonJSName "ReactDOM",
+    //   "org.webjars.bower" % "react" % "15.3.2"
+    //     /         "react-dom-server.js"
+    //     minified  "react-dom-server.min.js"
+    //     dependsOn "react-dom.js"
+    //     commonJSName "ReactDOMServer")
 )
 
-lazy val nodejs = (project in file("app-nodejs"))
-  .aggregate(shared)
-  .dependsOn(shared, angularjs)
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
-  .settings(jsCommonSettings: _*)
-  .settings(
-    name := "todomvc-nodejs",
-    organization := "com.github.ldaniels528",
-    version := appVersion,
-    watchSources += baseDirectory.value / ".." / "app-angularjs",
-    Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
-      crossTarget in(angularjs, Compile, packageJSKey) := baseDirectory.value / "public" / "javascripts"
-    },
-    compile in Compile <<=
-      (compile in Compile) dependsOn (fastOptJS in(angularjs, Compile)),
-    libraryDependencies ++= Seq(
-      "com.github.ldaniels528" %%% "scalajs-npm-mean-bundle-minimal" % transcendentVersion
-    )
-  )
+// lazy val nodejs = (project in file("app-nodejs"))
+//   .aggregate(shared)
+//   .dependsOn(shared
+//                // depending here, causes the client code to appear inside the server!
+//                // , angularjs
+// )
+//   .enablePlugins(ScalaJSPlugin)
+//   .settings(jsCommonSettings: _*)
+//   .settings(
+//     name := "todomvc-nodejs",
+//     persistLauncher := true,
+//     organization := "com.github.ldaniels528",
+//     version := appVersion,
+//     Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
+//       crossTarget in(angularjs, Compile, packageJSKey) := baseDirectory.value / "public" / "javascripts"
+//     },
+//     compile in Compile <<=
+//       (compile in Compile) dependsOn (fastOptJS in(angularjs, Compile)),
+//     libraryDependencies ++= Seq(
+//       "com.github.ldaniels528" %%% "scalajs-npm-mean-bundle-minimal" % transcendentVersion
+//     )
+//   )
 
-// loads the jvm project at sbt startup
-onLoad in Global := (Command.process("project nodejs", _: State)) compose (onLoad in Global).value
+// // loads the jvm project at sbt startup
+// onLoad in Global := (Command.process("project nodejs", _: State)) compose (onLoad in Global).value

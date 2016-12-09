@@ -1,12 +1,15 @@
 // Comment to get more information during initialization
 logLevel := Level.Debug
 
-// Plugins
+/// Plugins
+// sbt base plugin
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.3")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.2.0")
-
+// compiling scalajs projects via the ScalaJSPlugin
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.13")
+
+// compiling web based projects via the sbt-web plugin
+addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.2.0")
 
 // bundle npm dependencies together for the browser
 addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.3.1")
