@@ -51,7 +51,7 @@ lazy val shared = (project in file("app-shared"))
 
 // The frontend runs in the browser
 lazy val frontend = (project in file("app-frontend"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSBundlerPlugin)
   .aggregate(shared)
   .dependsOn(shared)
   .settings(jsCommonSettings: _*)
@@ -66,12 +66,13 @@ lazy val frontend = (project in file("app-frontend"))
       // contains the scalajs-react library, which includes facades for react
       "com.github.japgolly.scalajs-react" %%% "core" % "0.11.3"
     ),
-    npmDependencies in Compile ++= Seq("rc-tabs" -> "0.7.1",
-                                       "react" -> "15.3.2",
-                                       "react-dom" -> "15.3.2")
+    npmDependencies in Compile ++= Seq("rc-tabs" → "7.1.0",
+                                       "react" → "15.3.2",
+                                       "react-dom" → "15.3.2"),
 
     // the following are javascript dependencies, available as webjars
     // npm deps go into app-angularjs/package.json
+  // NOTE: Removed react here, since it collides with the npm version (two instances)!
     // jsDependencies ++= Seq(
     //   "org.webjars.bower" % "react" % "15.3.2"
     //     /        "react-with-addons.js"
