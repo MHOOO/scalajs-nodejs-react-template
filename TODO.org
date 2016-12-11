@@ -1,0 +1,10 @@
+* TODO find out how to compile less files (from rc-tabs)
+  :PROPERTIES:
+  :CREATED: <2016-12-11 Sun> 
+  :END:
+  - either on server side (nodejs) OR
+  - via sbt-web-scalajs app
+  - For now:
+    - Include less compiler inside browser
+  - Later:
+    - either pre-compile or jit compile on server

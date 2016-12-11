@@ -1,10 +1,9 @@
 /**
- * TodoMVC ScalaJS Bootstrap
- * @author: lawrence.daniels@gmail.com
+ * Bootstrap code for backend
  */
 (function () {
-    require("./target/scala-2.11/todomvc-nodejs-fastopt.js");
-    const facade = com.github.ldaniels528.todomvc.TodoServerMain();
+    require("./target/scala-2.11/app-backend-fastopt.js");
+    const facade = app.main();
     facade.startServer({
         "__dirname": __dirname,
         "__filename": __filename,
