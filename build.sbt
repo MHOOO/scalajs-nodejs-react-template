@@ -101,6 +101,7 @@ lazy val backend = (project in file("app-backend"))
   .settings(
     name := "app-backend",
     //persistLauncher := true,
+    enableReloadWorkflow := false,
     organization := "com.github.ldaniels528",
     version := appVersion,
     webpackConfigFile := Some(baseDirectory.value / "webpack.config.js"),
