@@ -8,7 +8,7 @@
 #### Building the application
 
 ```bash
-$ sbt clean "project nodejs" fastOptJS::webpack
+$ sbt clean "project backend" fastOptJS::webpack
 ```
 
 #### Running the application
