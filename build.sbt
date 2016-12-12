@@ -103,6 +103,7 @@ lazy val backend = (project in file("app-backend"))
     //persistLauncher := true,
     organization := "com.github.ldaniels528",
     version := appVersion,
+    webpackConfigFile := Some(baseDirectory.value / "webpack.config.js"),
     // Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
     //   crossTarget in(angularjs, Compile, packageJSKey) := baseDirectory.value / "public" / "javascripts"
     // },

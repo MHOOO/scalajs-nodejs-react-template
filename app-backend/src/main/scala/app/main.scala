@@ -8,11 +8,23 @@ import org.scalajs.nodejs.{Bootstrap, console}
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSImport}
+
+object DependencyInitHack
+{
+
+  @JSImport("express", JSImport.Default)
+  object MyExpress extends js.Object {}
+
+  MyExpress
+}
+
 
 @JSExportAll
-object main extends js.JSApp
+object BackendApp extends js.JSApp
 {
+  DependencyInitHack
+
   // main is empty, but necessary for compilation
   override def main(): Unit = {}
 
