@@ -8,6 +8,8 @@ import org.scalajs.nodejs.{Bootstrap, console}
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.scalajs.js
+import js.DynamicImplicits._
+import js.Dynamic.{global => g}
 import scala.scalajs.js.annotation.{JSExportAll, JSImport}
 
 object DependencyInitHack
