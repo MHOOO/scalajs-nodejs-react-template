@@ -14,25 +14,25 @@ import scala.scalajs.js.annotation.{JSExportAll, JSImport}
 
 object DependencyInitHack
 {
-
   @JSImport("express", JSImport.Default)
-  object MyExpress extends js.Object {}
+  object Express extends js.Object {}
 
-  MyExpress
+  @JSImport("express-ws", JSImport.Default)
+  object ExpressWS extends js.Object {}
+
 }
 
 
 @JSExportAll
 object BackendApp extends js.JSApp
 {
-  DependencyInitHack
-
   // main is empty, but necessary for compilation
-  override def main(): Unit = {}
+  override def main(): Unit = {
+    startServer()
+  }
 
   // will be invoked from the bootstrap js file (server.js)
-  def startServer(implicit bootstrap: Bootstrap): Unit = {
-    implicit val require = bootstrap.require
+  def startServer(): Unit = {
     console.log("starting server")
 
     // determine the port to listen on
@@ -40,15 +40,15 @@ object BackendApp extends js.JSApp
 
     // setup Express
     console.log("Loading Express modules...")
-    implicit val express = require[Express]("express")
+    implicit val express = DependencyInitHack.Express.asInstanceOf[Express]
     implicit val app = express().withWsRouting
-    implicit val wss = require[ExpressWS]("express-ws")(app)
+    implicit val wss = DependencyInitHack.ExpressWS.asInstanceOf[ExpressWS](app)
 
     // setup the body parsers
     console.log("Setting up body parsers...")
-    val bodyParser = require[BodyParser]("body-parser")
-    app.use(bodyParser.json())
-    app.use(bodyParser.urlencoded(new UrlEncodedBodyOptions(extended = true)))
+    // val bodyParser = require[BodyParser]("body-parser")
+    // app.use(bodyParser.json())
+    // app.use(bodyParser.urlencoded(new UrlEncodedBodyOptions(extended = true)))
 
     // setup the routes for serving static files
     console.log("Setting up the routes for serving static files...")
