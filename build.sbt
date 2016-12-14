@@ -107,9 +107,9 @@ lazy val backend = (project in file("app-backend"))
     organization := "com.github.ldaniels528",
     version := appVersion,
     webpackConfigFile := Some(baseDirectory.value / "webpack.config.js"),
-    // Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
-    //   crossTarget in(angularjs, Compile, packageJSKey) := baseDirectory.value / "public" / "javascripts"
-    // },
+    Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
+      crossTarget in(frontend, Compile, packageJSKey) := baseDirectory.value / "public" / "javascripts"
+    },
     compile in Compile <<=
       (compile in Compile) dependsOn (fastOptJS in(frontend, Compile)),
 
