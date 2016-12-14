@@ -96,7 +96,7 @@ lazy val backend = (project in file("app-backend"))
   .aggregate(shared)
   .dependsOn(shared
                // depending here, causes the client code to appear inside the server!
-               // , angularjs
+               //, frontend
 )
   .enablePlugins(ScalaJSBundlerPlugin)
   .settings(jsCommonSettings: _*)
