@@ -59,6 +59,8 @@ lazy val frontend = (project in file("app-frontend"))
     name := "frontend",
     organization := "com.github.ldaniels528",
     version := appVersion,
+    enableReloadWorkflow := false,
+    webpackConfigFile := Some(baseDirectory.value / "webpack.config.js"),
     //mainClass in Compile := Some("app.TodoMvcMain"),
     // dependencies necessary for compilation: these include facades for e.g. react
     libraryDependencies ++= Seq(
