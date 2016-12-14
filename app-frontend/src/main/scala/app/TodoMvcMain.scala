@@ -135,12 +135,12 @@ case class TabPane(tab : UndefOr[String] = undefined,
   }
 }
 
-@JSImport("react", JSImport.Default)
-  @js.native
-object MyReact extends js.Object {}
-@JSImport("react-dom", JSImport.Default)
-@js.native
-object MyReactDom extends js.Object {}
+// @JSImport("react", JSImport.Default)
+//   @js.native
+// object MyReact extends js.Object {}
+// @JSImport("react-dom", JSImport.Default)
+// @js.native
+// object MyReactDom extends js.Object {}
 
 
 /**
@@ -156,8 +156,11 @@ object TodoMvcMain extends js.JSApp {
   override def main(): Unit = {
     // hack around the fact, that the scalajs-react library requires react
     // to be available as a global named "React", but we use npm dependencies, wich have to be required first
-    js.Dynamic.global.React = MyReact
-    js.Dynamic.global.ReactDOM = MyReactDom
+    // js.Dynamic.global.React = MyReact
+    // js.Dynamic.global.ReactDOM = MyReactDom
+
+    // val React = MyReact.asInstanceOf[React]
+    // val ReactDOM = MyReactDom.asInstanceOf[ReactDOM]
     // create the application
     ReactDOM.render(Ipv4Input(), dom.document.getElementById("root"))
     val tabsCaseClass = RcTabs_Tabs(
