@@ -70,7 +70,8 @@ lazy val frontend = (project in file("app-frontend"))
     ),
     npmDependencies in Compile ++= Seq("rc-tabs" → "7.1.0",
                                        "react" → "15.3.2",
-                                       "react-dom" → "15.3.2")
+                                       "react-dom" → "15.3.2",
+                                       "expose-loader" -> "0.7.1")
 
     // the following are javascript dependencies, available as webjars
     // npm deps go into app-angularjs/package.json
@@ -107,9 +108,9 @@ lazy val backend = (project in file("app-backend"))
     organization := "com.github.ldaniels528",
     version := appVersion,
     webpackConfigFile := Some(baseDirectory.value / "webpack.config.js"),
-    Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
-      crossTarget in(frontend, Compile, packageJSKey) := baseDirectory.value / "public" / "javascripts"
-    },
+    // Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
+    //   crossTarget in(frontend, Compile, packageJSKey) := baseDirectory.value / "public" / "javascripts"
+    // },
     compile in Compile <<=
       (compile in Compile) dependsOn (fastOptJS in(frontend, Compile)),
 

@@ -135,12 +135,12 @@ case class TabPane(tab : UndefOr[String] = undefined,
   }
 }
 
-// @JSImport("react", JSImport.Default)
-//   @js.native
-// object MyReact extends js.Object {}
-// @JSImport("react-dom", JSImport.Default)
-// @js.native
-// object MyReactDom extends js.Object {}
+@JSImport("react", JSImport.Default)
+  @js.native
+object MyReact extends js.Object {}
+@JSImport("react-dom", JSImport.Default)
+@js.native
+object MyReactDom extends js.Object {}
 
 
 /**
