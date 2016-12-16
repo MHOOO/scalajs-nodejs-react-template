@@ -70,8 +70,10 @@ lazy val frontend = (project in file("app-frontend"))
     ),
     npmDependencies in Compile ++= Seq("rc-tabs" → "7.1.0",
                                        "react" → "15.3.2",
-                                       "react-dom" → "15.3.2",
-                                       "expose-loader" -> "0.7.1")
+                                       "react-dom" → "15.3.2"),
+    npmDevDependencies in Compile ++= Seq("expose-loader" -> "0.7.1",
+                                          "style-loader" → "0.13.1",
+                                          "css-loader" → "0.26.1")
 
     // the following are javascript dependencies, available as webjars
     // npm deps go into app-angularjs/package.json

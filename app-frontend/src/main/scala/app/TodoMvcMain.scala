@@ -143,6 +143,11 @@ object MyReact extends js.Object {}
 object MyReactDom extends js.Object {}
 
 
+// @JSImport("~rc-tabs/assets/index.css", JSImport.Default)
+@JSImport("!style-loader!css-loader!rc-tabs/assets/index.css", JSImport.Default )
+  @js.native
+object RcTabsAssets extends js.Object {}
+
 /**
   * Todo MVC application (MEANS.js demo)
   * @author lawrence.daniels@gmail.com
@@ -158,6 +163,7 @@ object TodoMvcMain extends js.JSApp {
     // to be available as a global named "React", but we use npm dependencies, wich have to be required first
     // js.Dynamic.global.React = MyReact
     // js.Dynamic.global.ReactDOM = MyReactDom
+    RcTabsAssets
 
     // val React = MyReact.asInstanceOf[React]
     // val ReactDOM = MyReactDom.asInstanceOf[ReactDOM]
