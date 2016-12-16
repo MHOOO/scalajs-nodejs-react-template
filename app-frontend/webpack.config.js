@@ -4,17 +4,25 @@ var fs = require('fs');
 
 module.exports = require('./scalajs.webpack.config');
 
-// module.exports.externals = {"react": "React",
-//                             "react-dom": "ReactDOM"};
+//module.exports.externals = [{}];
 
 module.exports.plugins = [
-    // new webpack.IgnorePlugin(/react/),
-    // new webpack.IgnorePlugin(/react-dom/)
-    new webpack.ProvidePlugin({
-        React: "react", react: "react", "window.react": "react", "window.React": "react",
-        ReactDOM: "react-dom", "window.ReactDOM" : "react-dom"
-    })
+    /// This would make sure react is available as "React" in every module
+    // new webpack.ProvidePlugin({
+    //     React: "react",
+    //     "window.React": "react",
+    //     ReactDOM: "react-dom",
+    //     "window.ReactDOM": "react-dom"
+    // })
 ];
 
-// module.loaders = [{test: require.resolve("react"), loader: "expose-loader?React"},
-//                   {test: require.resolve("react-dom"), loader: "expose-loader?ReactDOM"}]
+module.exports.module.loaders = [
+    // Make sure that react is available to e.g. the scalajs-react facade
+    {test: require.resolve("react"), loader: "expose?React"},
+    {test: require.resolve("react-dom"), loader: "expose?ReactDOM"},
+
+    {
+        test: /\.less$/,
+        loader: "style-loader!css-loader!less-loader"
+    }
+]

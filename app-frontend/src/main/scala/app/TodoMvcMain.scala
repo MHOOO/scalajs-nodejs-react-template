@@ -163,6 +163,8 @@ object TodoMvcMain extends js.JSApp {
     // to be available as a global named "React", but we use npm dependencies, wich have to be required first
     // js.Dynamic.global.React = MyReact
     // js.Dynamic.global.ReactDOM = MyReactDom
+    MyReact
+    MyReactDom
     RcTabsAssets
 
     // val React = MyReact.asInstanceOf[React]
